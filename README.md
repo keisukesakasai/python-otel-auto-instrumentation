@@ -14,12 +14,19 @@ docker run -d \
 ```
 
 - app 実行
+OTel の設定
+```sh:set_env_var.sh
+export OTEL_SERVICE_NAME=FlaskApp
+export OTEL_TRACES_EXPORTER=otlp
+export OTEL_METRICS_EXPORTER=otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+```
+環境変数設定
+```
+source ./set_env_var.sh
+```
+アプリ起動
 ```sh
-opentelemetry-instrument \
-    --traces_exporter console,otlp \
-    --metrics_exporter otlp \
-    --service_name SampleApp \
-    --exporter_otlp_protocol grpc \
-    --exporter_otlp_endpoint localhost:4317 \
-    python app.py
+opentelemetry-instrument flask run
 ```
