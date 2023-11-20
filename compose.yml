@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  server:
+    image: auto-instrumentation-server  # ここにサーバーのイメージ名を指定
+    ports:
+      - "8080:8080"
+
+  client:
+    image: auto-instrumentation-client  # ここにクライアントのイメージ名を指定
+    depends_on:
+      - server
+    environment:
+      - SERVER_URL=http://server:8080

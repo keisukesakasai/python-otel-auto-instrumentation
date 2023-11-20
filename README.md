@@ -30,3 +30,14 @@ source ./set_env_var.sh
 ```sh
 opentelemetry-instrument flask run
 ```
+
+```
+opentelemetry-instrument \
+    --traces_exporter console,otlp \
+    --metrics_exporter console \
+    --service_name server \
+    --exporter_otlp_endpoint http://localhost:4317 \
+    --distro opentelemetry-instrument \
+    --configurator "/" \
+    python3 app.py
+```
