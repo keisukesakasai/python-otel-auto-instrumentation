@@ -1,8 +1,41 @@
 ## python-otel-auto-instrumentation
-Python アプリを Otel で自動計装するためのプロジェクトです。
+Python 製アプリケーションを OpenTelemetry を使って自動計装するためのプロジェクト
 
-## 手順
-- Jaeger 起動
+## Environment
+- Flask の `< 3` Version
+- opentelemetry-distro の `0.41b0` Version
+
+## Usage
+
+### Server
+- 環境構築
+```sh
+# --- OTEL SDK 設定
+export OTEL_SERVICE_NAME=ServerApp
+
+# --- OTEL Exporter 設定
+export OTEL_TRACES_EXPORTER=console,otlp
+export OTEL_METRICS_EXPORTER=console,otlp
+export OTEL_LOGS_EXPORTER=console,otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+```
+
+### Client
+- 環境構築
+```sh
+# --- OTEL SDK 設定
+export OTEL_SERVICE_NAME=ClientApp
+
+# --- OTEL Exporter 設定
+export OTEL_TRACES_EXPORTER=console,otlp
+export OTEL_METRICS_EXPORTER=console,otlp
+export OTEL_LOGS_EXPORTER=console,otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+```
+
+### Jaeger
 ```sh
 docker run -d \
   -e COLLECTOR_OTLP_ENABLED=true \
@@ -13,31 +46,7 @@ docker run -d \
   jaegertracing/all-in-one:latest
 ```
 
-- app 実行
-OTel の設定
-```sh:set_env_var.sh
-export OTEL_SERVICE_NAME=FlaskApp
-export OTEL_TRACES_EXPORTER=otlp
-export OTEL_METRICS_EXPORTER=otlp
-export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
-```
-環境変数設定
-```
-source ./set_env_var.sh
-```
-アプリ起動
+### 起動
 ```sh
-opentelemetry-instrument flask run
-```
-
-```
-opentelemetry-instrument \
-    --traces_exporter console,otlp \
-    --metrics_exporter console \
-    --service_name server \
-    --exporter_otlp_endpoint http://localhost:4317 \
-    --distro opentelemetry-instrument \
-    --configurator "/" \
-    python3 app.py
+$ opentelemetry-instrument python app.py
 ```
