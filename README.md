@@ -17,6 +17,7 @@ export OTEL_SERVICE_NAME=ServerApp
 export OTEL_TRACES_EXPORTER=console,otlp
 export OTEL_METRICS_EXPORTER=console,otlp
 export OTEL_LOGS_EXPORTER=console,otlp
+export OTEL_PROPAGATORS=tracecontext
 export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
 ```
@@ -31,6 +32,7 @@ export OTEL_SERVICE_NAME=ClientApp
 export OTEL_TRACES_EXPORTER=console,otlp
 export OTEL_METRICS_EXPORTER=console,otlp
 export OTEL_LOGS_EXPORTER=console,otlp
+export OTEL_PROPAGATORS=tracecontext
 export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
 ```
